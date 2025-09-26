@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV["PGUSER"] || "denissshved" %>
+  password: <%= ENV["PGPASSWORD"] || "" %>
+  host: localhost
+
+development:
+  <<: *default
+  database: crypto_alert_development
+
+test:
+  <<: *default
+  database: crypto_alert_test
+
+production:
+  <<: *default
+  database: crypto_alert_production
+  username: <%= ENV["PGUSER"] || "crypto_alert" %>
+  password: <%= ENV["PGPASSWORD"] || "" %>
