@@ -1,2 +1,8 @@
-queues:
+:queues:
   - default
+:concurrency: 5
+:schedule:
+  check_alerts_job:
+    cron: "* * * * *"   # every minute
+    class: "CheckAlertsJob"
+    queue: default

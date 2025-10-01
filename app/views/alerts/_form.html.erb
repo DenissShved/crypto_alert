@@ -1,0 +1,51 @@
+<%= form_with(model: alert) do |form| %>
+  <% if alert.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(alert.errors.count, "error") %> prohibited this alert from being saved:</h2>
+
+      <ul>
+        <% alert.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <p>Current user: <%= @user.name %> (<%= @user.email %>)</p>
+  </div>
+
+  <div>
+    <%= form.label :coin, style: "display: block" %>
+    <%= form.text_field :coin %>
+  </div>
+
+  <div>
+    <button type="button" id="fetch-price">Current price</button>
+    <span id="current-price"></span>
+  </div>
+
+  <div>
+    <%= form.label :condition, style: "display: block" %>
+    <%= form.select :condition, options_for_select([['Above', 'above'], ['Below', 'below']]) %>
+  </div>
+
+  <div>
+    <%= form.label :target_price, style: "display: block" %>
+    <%= form.text_field :target_price %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script>
+  document.getElementById("fetch-price").addEventListener("click", async () => {
+    const coin = document.querySelector("#alert_coin").value;
+    if (!coin) return alert("Enter a coin symbol first");
+    const url = "<%= current_price_alerts_path %>?symbol=" + coin;
+    const response = await fetch(url);
+    const data = await response.json();
+    document.getElementById("current-price").innerText = data.price;
+  });
+</script>

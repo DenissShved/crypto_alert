@@ -18,9 +18,9 @@ gem "stimulus-rails"
 gem "jbuilder"
 # Background jobs
 gem "sidekiq"
-# Testing
-gem "rspec-rails"
-# HTTP client (optional, can use net/http)
+gem "sidekiq-cron"
+gem "sidekiq-scheduler"
+# HTTP client
 gem "httparty"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
@@ -52,11 +52,14 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "rspec-rails"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "letter_opener"
 end
 
 group :test do
